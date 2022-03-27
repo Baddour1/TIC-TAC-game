@@ -1,0 +1,92 @@
+board=["-","-","-","-","-","-","-","-","-",]
+def print_board():
+    c=0
+    for i in range(3):
+        for j in range(3):
+            if j == 2 :
+                print(" " +str( board[c]) + "  ", end="")
+            else:
+                 print(" "+str(board[c])+" |",end="")
+            c+=1
+        print()
+def get_inputs(player):
+    inp_false = True
+    while inp_false:
+        position = int(input("Player " + str(player) + " Enter position from 1 to 9 : "))
+        if position <= 9 and position > 0 and board[position - 1] == "-":
+            inp_false = False
+        else:
+            inp_false = True
+            print("invalid input, try again")
+    inp_false = True
+
+    while inp_false:
+        player_inp = int(input("Player " + str(player) + " Enter number from " + str(numbers[player - 1]) + " : "))
+        if player_inp in numbers[player - 1]:
+            inp_false = False
+        else:
+            inp_false = True
+            print("invalid input, try again")
+    return position,player_inp
+
+def check_hirz(board):
+    i = 0
+    while i < 7:
+        if (board[i] == "-") or (board[i + 1] == "-") or (board[i + 2] == "-"):
+            return
+        else:
+            if board[i] + board[i + 1] + board[i + 2] == 15:
+                print("player: " + str(player) + " win")
+                exit()
+        i = i + 3
+
+def check_virtical(board):
+    i=0
+    while i<3:
+        if (board[i] == "-") or (board[i + 3] == "-") or (board[i + 6] == "-"):
+            return
+        else:
+            if board[i] + board[i+3] + board[i+6] == 15:
+                print("player " + str(player) + "is winner")
+                exit()
+        i+=1
+
+def check_digonals(board):
+    if (board[0] == "-") or (board[4] == "-") or (board[8] == "-"):
+        return
+    else:
+        if board[0] + board[4] + board[8] == 15:
+            print("player " +str(player) + "win")
+            exit()
+
+def check_digonals2(board):
+    if (board[2] == "-") or (board[4] == "-") or (board[6] == "-"):
+        return
+    else:
+        if board[2] + board[4] + board[6] == 15:
+            print(" player  " + str(player) +" is the winner")
+            exit()
+
+# thanks for watching this 4 min video and i hope you understand code
+# omar mohammed baddour         20210272
+
+
+
+
+
+
+
+
+
+game_on = True
+numbers = [[1,3,5,7,9],[0,2,4,6,8]]
+while game_on:
+    for player in [1,2]:
+        print_board()
+        pos,num = get_inputs(player)
+        board[pos-1]=num
+        numbers[player-1].remove(num)
+        check_hirz(board)
+        check_virtical(board)
+        check_digonals(board)
+        check_digonals2(board)
